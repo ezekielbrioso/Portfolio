@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Technologist | Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --moon-light: #F5D5E0;   
+            --moon-blue: #6667AB;    
+            --moon-purple: #7B337E;  
+            --moon-plum: #420D4B;    
+            --moon-dark: #210635;    
+            
+            --glass-bg: rgba(33, 6, 53, 0.35); 
+            --glass-border: rgba(245, 213, 224, 0.2);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(245, 213, 224, 0.05);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;            color: var(--moon-light);
+            background: linear-gradient(-45deg, #dcd3c2, #9f677b, #1f2955, #dad297);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- INTERACTIVE CANVAS LAYER --- */
+        #particle-canvas {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none; 
+        }
+
+        .site-logo {
+            position: fixed;
+            top: 20px;
+            left: 25px;
+            z-index: 1001;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .site-logo:hover {
+            transform: scale(1.1);
+        }
+
+        .site-logo img {
+            height: 70px;
+            width: auto;
+            filter: drop-shadow(0 0 15px rgba(245, 213, 224, 0.6)) drop-shadow(0 0 30px rgba(102, 103, 171, 0.4));
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            image-rendering: crisp-edges;
+        }
+
+        .site-logo:hover img {
+            filter: drop-shadow(0 0 25px rgba(245, 213, 224, 0.8)) drop-shadow(0 0 40px rgba(102, 103, 171, 0.6)) brightness(1.15);
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 { 
+            font-family: 'Montserrat', sans-serif; 
+            color: var(--moon-light); 
+            font-weight: 800; 
+            letter-spacing: -0.5px; 
+            text-shadow: 0 0 10px rgba(245, 213, 224, 0.4); 
+        }
+        
+        p { 
+            line-height: 1.7; 
+            font-size: 1.1rem; 
+            color: rgba(245, 213, 224, 0.9); 
+            font-weight: 300; 
+            font-family: 'Outfit', sans-serif; 
+        }
+        
+        .glass-btn, nav a, .tag {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+        }
+        
+        
+        /* --- GLASSMORPHISM CLASSES --- */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border); border-radius: 15px;
+            box-shadow: var(--glass-shadow); position: relative; z-index: 10;
+        }
+
+        .glass-panel { padding: 40px; margin-bottom: 40px; transition: all 0.4s ease; }
+        .glass-panel:hover {
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6), 0 0 25px rgba(102, 103, 171, 0.3), inset 0 0 15px rgba(245, 213, 224, 0.15);
+            border: 1px solid rgba(245, 213, 224, 0.5); transform: translateY(-5px);
+        }
+
+        .glass-btn {
+            background: rgba(102, 103, 171, 0.15); backdrop-filter: blur(20px);
+            border: 1px solid var(--moon-blue); border-radius: 30px; color: var(--moon-light);
+            padding: 12px 28px; font-size: 1rem; font-weight: bold; cursor: pointer;
+            transition: all 0.3s ease; text-decoration: none; display: inline-block;
+            text-shadow: 0 0 5px rgba(245, 213, 224, 0.5); z-index: 10; position: relative;
+        }
+
+        .glass-btn:hover {
+            background: rgba(102, 103, 171, 0.6); color: #fff; transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 20px rgba(102, 103, 171, 0.8); border-color: var(--moon-light);
+        }
+
+        /* --- LAYOUT & SECTIONS --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 10; }
+        section { padding: 100px 0; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
+
+        /* --- FIXED NAVBAR --- */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            gap: 35px;
+            padding: 18px 50px;
+            border-radius: 50px;
+            background: rgba(33, 6, 53, 0.75);
+            border: 1.5px solid rgba(102, 103, 171, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(102, 103, 171, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            width: max-content;
+            max-width: 90vw;
+            flex-wrap: wrap;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        nav:hover {
+            background: rgba(33, 6, 53, 0.85);
+            border-color: rgba(102, 103, 171, 0.7);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(102, 103, 171, 0.25);
+        }
+
+        nav a {
+            color: var(--moon-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            white-space: nowrap;
+            padding: 8px 16px;
+            border-radius: 25px;
+            position: relative;
+            letter-spacing: 0.5px;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 25px;
+            background: rgba(102, 103, 171, 0.15);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        nav a:hover {
+            color: var(--moon-light);
+            text-shadow: 0 0 12px rgba(102, 103, 171, 0.9);
+            transform: translateY(-3px);
+        }
+
+        nav a:hover::before {
+            opacity: 1;
+        }
+
+        /* --- CONTACT BUTTON --- */
+        .contact-btn {
+            position: fixed;
+            top: 20px;
+            right: 50px;
+            z-index: 1001;
+            padding: 25px 32px;
+            background: linear-gradient(135deg, rgba(102, 103, 171, 0.4), rgba(123, 51, 126, 0.3));
+            border: 1.5px solid var(--moon-light);
+            border-radius: 40px;
+            color: var(--moon-light);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 20px rgba(102, 103, 171, 0.2), inset 0 0 15px rgba(245, 213, 224, 0.05);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+
+        .contact-btn:hover {
+            background: linear-gradient(135deg, rgba(102, 103, 171, 0.6), rgba(123, 51, 126, 0.5));
+            border-color: var(--moon-light);
+            box-shadow: 0 8px 35px rgba(102, 103, 171, 0.4), inset 0 0 20px rgba(245, 213, 224, 0.15);
+            transform: translateY(-4px) scale(1.05);
+            text-shadow: 0 0 10px rgba(245, 213, 224, 0.8);
+        }
+
+        /* --- HAMBURGER MENU (Mobile) --- */
+        .hamburger-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 40px;
+            height: 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .hamburger-btn span {
+            width: 100%;
+            height: 3px;
+            background: var(--moon-light);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(33, 6, 53, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            gap: 30px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            color: var(--moon-light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .mobile-menu a:hover {
+            text-shadow: 0 0 20px rgba(102, 103, 171, 0.8);
+            transform: scale(1.1);
+        }
+
+        .mobile-menu .contact-link {
+            background: linear-gradient(135deg, rgba(102, 103, 171, 0.5), rgba(123, 51, 126, 0.4));
+            border: 1.5px solid var(--moon-light);
+            border-radius: 30px;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        .mobile-menu .contact-link:hover {
+            background: linear-gradient(135deg, rgba(102, 103, 171, 0.7), rgba(123, 51, 126, 0.6));
+            box-shadow: 0 0 30px rgba(102, 103, 171, 0.5);
+        }
+
+        /* --- TABLET LAYOUTS (768px - 1024px) --- */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .site-logo img { height: 50px; }
+            nav { padding: 15px 35px; gap: 25px; }
+            nav a { font-size: 0.9rem; }
+            .contact-btn { padding: 20px 28px; font-size: 0.9rem; right: 30px; }
+            section { padding: 60px 0; min-height: auto; }
+            h2 { font-size: 2rem !important; }
+            .glass-panel { padding: 30px; margin-bottom: 30px; }
+            .capability-row { gap: 25px; margin-bottom: 40px; }
+            .capability-visual { min-width: 250px; height: 250px; }
+            .capability-content { min-width: 250px; }
+            .project-row { gap: 25px; margin-bottom: 40px; }
+            .project-info { min-width: 250px; }
+            .project-media { min-width: 250px; }
+            .project-media iframe { width: 100% !important; height: auto !important; }
+            .hero-content h1 { font-size: 4rem; }
+            .hero-content p { font-size: 1rem; }
+            .about-layout { gap: 30px; }
+        }
+
+        /* --- MOBILE LAYOUTS (max-width: 768px) --- */
+        @media (max-width: 768px) {
+            /* Hide desktop navigation and contact button */
+            nav { display: none; }
+            .contact-btn { display: none; }
+
+            /* Show hamburger menu */
+            .hamburger-btn { display: flex; }
+
+            /* Logo sizing */
+            .site-logo { left: 15px; top: 15px; }
+            .site-logo img { height: 45px; }
+
+            /* Hero section */
+            #hero { min-height: 85vh; padding-top: 80px; }
+            .hero-content { 
+                padding: 0 20px !important; 
+                text-align: center !important; 
+                margin: 0 auto;
+                max-width: 100%;
+            }
+            .hero-content h1 { 
+                font-size: 2rem; 
+                line-height: 1.2;
+                word-break: break-word;
+                margin-bottom: 15px;
+            }
+            .hero-content p { font-size: 0.9rem; }
+            
+            /* Section adjustments */
+            section { padding: 50px 0; }
+            .container { padding: 0 15px; }
+        }
+
+        
+
+        /* --- HERO BANNER --- */
+        #hero {
+            position: relative; min-height: 100vh; width: 100vw; margin-top: 0; padding: 0;
+            display: flex; align-items: center; z-index: 1;
+            background: transparent; 
+        }
+        
+        .hero-content { 
+            position: relative; z-index: 10; text-align: left; max-width: 700px; 
+            padding: 0; 
+        }
+        
+        .hero-content h1 { 
+            font-size: 5rem; margin-bottom: 10px; line-height: 1.1; text-transform: uppercase; 
+        }
+        
+        .hero-content p { 
+            font-size: 1.2rem; text-shadow: 0 2px 10px rgba(0,0,0,0.8); 
+        }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+
+        /* --- ABOUT SECTION LAYOUT --- */
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .about-layout {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto;
+                gap: 30px;
+            }
+        }
+
+        .about-image {
+            grid-column: 1;
+            grid-row: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .about-bio {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .about-toolkit {
+            grid-column: 1 / -1;
+            grid-row: 2;
+        }
+
+        /* Capability Rows */
+        .capability-row { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; margin-bottom: 60px; }
+        .capability-row.reverse { flex-direction: row-reverse; }
+        .capability-content { flex: 1; min-width: 300px; }
+        .capability-visual {
+            flex: 1; min-width: 300px; height: 300px; background: rgba(0, 0, 0, 0.3); border-radius: 10px;
+            border: 1px solid rgba(102, 103, 171, 0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+            display: flex; align-items: center; justify-content: center; color: var(--moon-blue); font-weight: bold; overflow: hidden; position: relative;
+        }
+        .capability-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+        }
+        .capability-visual::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+            background: rgba(245, 213, 224, 0.3); box-shadow: 0 0 15px rgba(245, 213, 224, 0.6);
+            animation: scanline 3s linear infinite;
+        }
+        @keyframes scanline { 0% { top: -10%; } 100% { top: 110%; } }
+
+        /* --- APP STATE LOGIC (SPA) --- */
+        #main-scroll-site { display: block; animation: fadeIn 0.8s ease; }
+        .detail-view { display: none; padding-top: 100px; animation: slideUp 0.6s ease; min-height: 100vh; position: relative; z-index: 10;}
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .project-row { display: flex; flex-wrap: wrap; gap: 40px; margin-bottom: 60px; align-items: stretch; }
+        .project-info { flex: 1; min-width: 300px; }
+        .project-media {
+            flex: 1.5; min-width: 300px; background: rgba(0,0,0,0.4); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            border: 1px solid var(--moon-purple); box-shadow: 0 0 15px rgba(123, 51, 126, 0.2);
+            aspect-ratio: 16/9; position: relative;
+        }
+        .project-media span { position: absolute; z-index: 1; font-weight: bold; color: rgba(245, 213, 224, 0.5); }
+        
+        .tag { 
+            background: rgba(102, 103, 171, 0.2); border: 1px solid var(--moon-blue);
+            color: var(--moon-light); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; 
+            display: inline-block; margin: 0 5px 5px 0; text-shadow: 0 0 5px rgba(245, 213, 224, 0.3);
+        }
+
+        .button-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+
+        /* --- SCROLL ANIMATION CLASSES --- */
+        section, .glass-panel, .capability-row, .project-row {
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateY(30px);
+        }
+
+        section.animate-in, .glass-panel.animate-in, 
+        .capability-row.animate-in, .project-row.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#hero" class="site-logo" onclick="showMain()">
+        <img src="assets/portfoliologo.png" alt="Creative Technologist Logo">
+    </a>
+    <canvas id="particle-canvas"></canvas>
+
+    <nav class="glass">
+        <a href="#hero" onclick="showMain()">Home</a>
+        <a href="#about" onclick="showMain()">About</a>
+        <a href="#portfolio" onclick="showMain()">Portfolio</a>
+        <a href="#experience" onclick="showMain()">Experience</a>
+    </nav>
+
+    <button class="hamburger-btn" id="hamburger" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#hero" onclick="closeMobileMenu()">Home</a>
+        <a href="#about" onclick="closeMobileMenu()">About</a>
+        <a href="#portfolio" onclick="closeMobileMenu()">Portfolio</a>
+        <a href="#experience" onclick="closeMobileMenu()">Experience</a>
+        <a href="#contact" class="contact-link" onclick="closeMobileMenu()">Get In Touch</a>
+    </div>
+
+    <a href="#contact" class="contact-btn" onclick="showMain()">Get In Touch &rarr;</a>
+
+    <div id="main-scroll-site">
+        <section id="hero">
+            <div class="container" style="width: 100%;">
+                <div class="hero-content">
+                    <h1>EZEKIEL<br>BRIOSO</h1>
+                    <p style="color: var(--moon-blue); font-weight: bold; letter-spacing: 2px; text-transform: uppercase;">Software Engineer • UI/UX Lead • Narrative Designer</p>
+                    <p style="margin: 20px 0 40px 0;">A Senior Creative Computing Student, bridging the gap between logic and imagination to develop novel results. Your aspirations at the heart of every design.</p>
+                    
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                        <a href="#portfolio" class="glass-btn" style="padding: 15px 35px; background: var(--moon-light); color: var(--moon-dark);">Explore My Portfolio &rarr;</a>
+                        <a href="#contact" class="glass-btn" style="padding: 15px 35px;">Hire Me &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="container">
+            <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 60px;">About Me</h2>
+            <div class="about-layout">
+                <div class="about-image">
+                    <div class="about-image-placeholder">
+                        <img src="assets/personalphoto.jpg" alt="Profile Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 24px;">
+                    </div>
+                </div>
+                <div class="about-content">
+                    <div class="glass glass-panel">
+                        <h3>Bio</h3>
+                        <p>As a 3rd-year Creative Computing student and creative developer, I view code not merely as a tool for logic, but as a primary medium for artistic expression. My practice is dedicated to the craft of interactive experiences, specializing in the translation of high-fidelity visual languages into functional, performant software that preserves the "wow factor" without compromising technical stability. By focusing on the seamless transition from an initial spark to a final user interaction, I build immersive environments and intuitive interfaces that challenge our perception of digital space and ensure that complex design concepts result in high-performance, impactful products.</p>
+                    </div>
+                    <div class="glass glass-panel">
+                        <h3>My Toolkit</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Java</span>
+                            <span class="tag">C#</span>
+                            <span class="tag">Kotlin</span>
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">Firebase</span>
+                            <span class="tag">Figma</span>
+                            <span class="tag">Twine</span>
+                            <span class="tag">Unity</span>
+                            <span class="tag">Git</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="container">
+            <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 60px;">Featured Projects</h2>
+            <div class="glass glass-panel capability-row">
+                <div class="capability-content"><h3>Software & Systems</h3><p>I specialize in transforming complex business challenges into streamlined, intelligent digital solutions. By applying advanced computational thinking, I deconstruct abstract requirements into manageable technical steps to build reliable full-stack web and mobile applications. My work integrates core object-oriented programming with emerging technologies like Machine Learning to create data-driven tools that are both innovative and technically sound.</p><button class="glass-btn" onclick="openDetail('software-detail')">Explore More &rarr;</button></div>
+                <div class="capability-visual"><span><img src="assets/softwareandsystem.jpg" alt="Software & Systems"></span></div>
+            </div>
+            <div class="glass glass-panel capability-row reverse">
+                <div class="capability-content"><h3>Experience Design</h3><p>I design digital products that are as intuitive as they are impactful, ensuring every interaction serves a clear purpose for the end-user. Utilizing a rigorous, iterative design cycle—prototyping, testing, and refining—I bridge the gap between initial ideation and a polished, production-ready interface. Whether through high-fidelity Figma mockups or conversational AI, my focus is on consolidating modern design principles to create engaging experiences tailored to your specific audience.</p><button class="glass-btn" onclick="openDetail('design-detail')">Explore More &rarr;</button></div>
+                <div class="capability-visual"><span><img src="assets/experiencedesign.jpg" alt="Experience Design"></span></div>
+            </div>
+            <div class="glass glass-panel capability-row">
+                <div class="capability-content"><h3>Interactive Narratives</h3><p>I leverage the power of digital storytelling to inform, persuade, and deeply engage audiences across multiple platforms. By combining creative flair with technical tools like Unity and Twine, I develop immersive, non-linear experiences that bring complex data and brand stories to life. My approach is grounded in deep research and critical synthesis, allowing me to transform unstructured information into compelling interactive content that resonates with modern users.</p><button class="glass-btn" onclick="openDetail('narratives-detail')">Explore More &rarr;</button></div>
+                <div class="capability-visual"><span><img src="assets/interactivenarratives.jpg" alt="Interactive Narratives"></span></div>
+            
+            </div>
+        </section>
+
+        <section id="experience" class="container">
+            <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 40px;">PROFESSIONAL PROJECTS & INDUSTRY EXPERIENCE</h2>
+            <div class="glass glass-panel"><h3>Editorial Intern</h3><p>Sports & Gulf Magazine</p><p>By utilizing digital storytelling techniques, linear and non-linear narratives were developed for sports and regional features to inform and entertain diverse audiences. This process involved filtering and synthesizing data from unstructured sources to establish a critical position and inform the strategic direction of original editorial content. Throughout these activities, complex ideas and information were communicated effectively to both specialist and non-specialist audiences within a collaborative team environment.</p></div>
+            <div class="glass glass-panel"><h3>Software Engineer • UI/UX Lead • Research Coordinator</h3><p>Quadro Coffee | Creative Industry Challenge</p><p>As a UI/UX Lead, Software Engineer, and Research Coordinator, I directed the iterative design cycle of prototyping and testing to generate creative artifacts targeting specific audience demographics. This involved programming core features and object-oriented components to ensure technical proficiency and the successful actuation of creative concepts. Additionally, I extracted insights from diverse sources to establish a critical position that informed the strategic direction of original work. Throughout the process, I partnered with industry professionals and peers to deliver production-led solutions for complex creative briefs.</p></div>
+        </section>
+
+        <section id="contact" class="container" style="min-height: 40vh; text-align: center;">
+            <div class="glass glass-panel">
+                <h2>Connect With Me</h2>
+                <div class="button-group">
+                    <a href="mailto:zie.brioso@gmail.com" class="glass-btn"><i class="fas fa-envelope"></i> Email</a>
+                    <a href="https://linkedin.com/in/ezekiel-brioso-142330379" class="glass-btn" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn Profile</a>
+                    <a href="https://drive.google.com/file/d/1LRcb_2kOyRnJsGuufJXJFrZngNTaEw3n/view?usp=sharing" target="_blank" class="glass-btn"><i class="fas fa-file-alt"></i> View CV/Resume</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="software-detail" class="detail-view container">
+        <button class="glass-btn" onclick="closeDetail()" style="margin-bottom: 30px;">&larr; Back to Main Interface</button>
+        <div class="glass glass-panel"><h1 style="margin:0;">Software & Intelligent Systems</h1></div>
+        
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>PomoToro</h2><p>Android Application Development</p>
+            <p><strong>PomoToro</strong> is a productivity timer app inspired by "My Neighbor Totoro," designed to help users focus while promoting well-being through a peaceful experience.</p>
+            <a href="https://github.com/ezekielbrioso/PomoToro/tree/master" target="_blank" class="glass-btn" style="margin-top: 15px;">
+                View Project &rarr;</a></div><div class="project-media">
+                    <iframe src="https://drive.google.com/file/d/1dOc4-s2n7s20MqW9qhNozr_Q4mChp5q4/preview" width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>Milky Weigh</h2><p>Android Application Development</p>
+            <p><strong>Milky Weigh</strong> is a sleek, space-themed mobile app that calculates your hypothetical weight on different planets and moons. Users simply enter their current weight in kilograms, and the app instantly generates a scrollable list displaying their converted weight across the solar system, complete with fun, thematic descriptions for each celestial body. The experience is wrapped in a visually engaging dark-mode aesthetic with smooth animations and intuitive error handling.</p>
+            <a href="https://github.com/ezekielbrioso/MilkyWeigh/tree/master" target="_blank" class="glass-btn" style="margin-top: 15px;">
+                View Project &rarr;</a>
+            </div>
+            <div class="project-media">
+                    <iframe src="https://drive.google.com/file/d/1AtIkLsi-3gnQPYpsszAQpH6APOlGpfdJ/preview" width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>Florish Website</h2><p>Full-Stack Web Application</p>
+            <p><strong>Florish</strong> is a full-stack e-commerce flower shop that allows users to purchase pre-made arrangements or design custom bouquets using an interactive, real-time "bouquet engine". The responsive platform features a searchable catalog with filtering logic, a secure checkout process with Google Sign-in, and a restricted admin dashboard for instantaneous inventory and database management.</p>
+            <a href="https://florish-website.onrender.com/" target="_blank" class="glass-btn" style="margin-top: 15px;">
+                View Website &rarr;</a>
+            </div>
+            <div class="project-media">
+                    <iframe src="https://drive.google.com/file/d/1nbHNW4k6Q30pMQpC-WvWLC0akfM5CdML/preview" width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>Quadro Coffee Website</h2><p>Full-Stack Web Application</p>
+            <p><strong>Quadro Coffee</strong> is a full-stack web application designed to showcase the products and services of a local coffee shop. The website features a modern, responsive design with an intuitive user interface that allows customers to browse the menu, view store locations, and place orders online.</p>
+            <a href="https://joaquinabril.github.io/Quadro-Coffee-Live-Website/" target="_blank" class="glass-btn" style="margin-top: 15px;">
+                View Website &rarr;</a>
+            </div>
+            <div class="project-media">
+                    <iframe src="https://drive.google.com/file/d/1GcXljsg8Zh3Ltw55ZlW1GfJIeRdKYakt/preview" width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>PCOS Predictive Model</h2><p>Machine Learning Application</p>
+            <p><strong>PCOS Predictive Model</strong> is a machine learning application designed to predict the likelihood of developing Polycystic Ovary Syndrome (PCOS) based on various health indicators and demographic factors. The model utilizes a combination of statistical analysis and deep learning techniques to provide accurate predictions and support clinical decision-making.</p>
+            <a href="https://www.kaggle.com/code/ezekielbrioso/assessment-2-predictive-model" target="_blank" class="glass-btn" style="margin-top: 15px;">
+                View Model &rarr;</a>
+            </div>
+            <div class="project-media">
+                <iframe src="https://drive.google.com/file/d/14frDYwv_tKuRW2tceG-ecqN6Rwllg30C/preview" width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="design-detail" class="detail-view container">
+        <button class="glass-btn" onclick="closeDetail()" style="margin-bottom: 30px;">&larr; Back to Main Interface</button>
+        <div class="glass glass-panel"><h1 style="margin:0;">Experience Design</h1></div>
+        
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>PlatePal App</h2>
+            <p>Application Experience Prototype</p>
+            <p><strong>PlatePal App</strong> is a mobile application prototype designed to provide a seamless and engaging user experience for meal tracking and supporting nearby farmers or small businesses.</p>
+            <a href="https://www.figma.com/design/uwFTP7oVk7K3t4ZN452ou6/PlatePal-App?node-id=9-6&m=dev&t=86gcgAnWMP1uLiIV-1" target="_blank" class="glass-btn" style="margin-top: 15px;">
+                View Project &rarr;</a>
+            </div>
+            <div class="project-media">
+                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/proto/uwFTP7oVk7K3t4ZN452ou6/PlatePal-App?node-id=250-462&p=f&scaling=scale-down&content-scaling=fixed&page-id=9%3A6&starting-point-node-id=60%3A42&embed-host=share" allowfullscreen></iframe>
+            </div>
+        </div>
+        
+        
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>Chocolate Box Website</h2>
+            <p>Web Experience Prototype</p><p><strong>Chocolate Box Website</strong> is a web experience prototype designed to showcase the products and services of a chocolate shop. The website features a modern, responsive design with an intuitive user interface that allows customers to browse the menu, view store locations, and place orders online.</p>
+            <a href="https://www.figma.com/design/eTdNmSITy5QSp9sCvFB4Lc/Gerard-s-Chocolate-Box-Website-for-Desktop---Mobile?node-id=0-1&m=dev&t=Dj8CXisWU3WXzmbP-1"  target="_blank" class="glass-btn" style="margin-top: 15px;">
+                View Project &rarr;</a>
+            </div>
+            <div class="project-media">
+                    <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/proto/eTdNmSITy5QSp9sCvFB4Lc/Gerard-s-Chocolate-Box-Website-for-Desktop---Mobile?node-id=236-234&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=236%3A234&embed-host=share" allowfullscreen></iframe>
+            </div>
+        </div>
+        
+        
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>Quadro Coffee Website</h2>
+            <p>Web Experience Prototype</p>
+            <p><strong>Quadro Coffee Website</strong> is a web experience prototype designed to showcase the products and services of a local coffee shop. The website features a modern, responsive design with an intuitive user interface that allows customers to browse the menu, view store locations, and place orders online.</p>
+            <a href="https://www.figma.com/design/9NNmeu5T6o0wGsisaac4Wb/Quadro-Coffee?node-id=19-2&m=dev&t=Dj8CXisWU3WXzmbP-1" target="_blank" class="glass-btn" style="margin-top: 15px;">
+                View Project &rarr;</a>
+            </div>
+            <div class="project-media">
+                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/proto/9NNmeu5T6o0wGsisaac4Wb/Quadro-Coffee?node-id=32-4&scaling=scale-down&content-scaling=fixed&page-id=19%3A2&starting-point-node-id=32%3A4&embed-host=share" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="narratives-detail" class="detail-view container">
+        <button class="glass-btn" onclick="closeDetail()" style="margin-bottom: 30px;">&larr; Back to Main Interface</button>
+        <div class="glass glass-panel"><h1 style="margin:0;">Interactive Narratives</h1></div>
+        
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>Cherry On Top</h2>
+            <p>Unity Game Environment</p>
+            <p><strong>Cherry On Top</strong>is a charming, pixel-art platformer featuring a pink, round character navigating a world made of cake and candy. Players jump between floating, frosting-covered platforms to collect cherries while avoiding hazards and gathering hearts. The gameplay emphasizes precision jumping and exploration across vertical levels, all accompanied by a bright, whimsical aesthetic and a cheerful soundtrack. The ultimate goal is to reach the top of a giant cake and place a cherry on it to complete the level.</p>
+            <a href="https://ezekielpbrioso.itch.io/cherry-on-top" target="_blank" class="glass-btn" style="margin-top: 15px;">
+                Play "Cherry On Top" &rarr;</a>
+            </div>
+            <div class="project-media">
+                <iframe src="https://drive.google.com/file/d/1rNNVtw5mHE-MQFHSb36CTKbl4k5AtqSF/preview" width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>Beyond Braids: Rapunzel's Kaleidoscope of Endings</h2>
+            <p>Twine Interactive Story</p>
+            <p><strong>Beyond Braids: Rapunzel’s Kaleidoscope of Endings</strong> is an atmospheric, choice-based visual novel that reimagines the classic fairy tale with multiple branching paths. Featuring a moody pixel-art aesthetic and a melancholic soundtrack, the game focuses on narrative decision-making rather than action. Players navigate a mystical forest and a hidden tower, making pivotal choices that determine Rapunzel’s fate—exploring themes of isolation, protection, and family through a variety of unique, bittersweet endings.</p>
+            <a href="https://ezekielbrioso.itch.io/beyond-braids" target="_blank" class="glass-btn" style="margin-top: 15px;">
+                Play "Beyond Braids: Rapunzel's Kaleidoscope of Endings" &rarr;</a>
+            </div>
+            <div class="project-media">
+                <iframe src="https://drive.google.com/file/d/1pM9PtgEZUUzOWojVEccEsNNl8YuGykdh/preview" width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>Edgewharf Town</h2>
+            <p>Bitsy Game</p>
+            <p><strong>Edgewharf Town</strong> is a minimalist, top-down mystery adventure featuring a striking monochromatic pixel-art style. Playing as a detective, you investigate the legend of the "Moonlight Bandit," a figure blamed for local disappearances and nocturnal screams. The gameplay focuses on environmental exploration and clue-gathering, leading to the discovery of Lumina—a girl trapped in a supernatural loop. By solving puzzles and activating hidden symbols, you shift the narrative from an urban legend mystery into a mission to break a curse and restore the town's peace.</p>
+            <a href="https://ezekielbrioso.itch.io/edgewharf-town" target="_blank" class="glass-btn" style="margin-top: 15px;">
+                Play "Edgewharf Town" &rarr;</a>
+            </div>
+            <div class="project-media">
+                <iframe src="https://drive.google.com/file/d/1WmRQdlkdqOHtMoiE60FjSkZna2c75owA/preview" width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        // --- SCROLL ANIMATION OBSERVER ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections and glass panels
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('section, .glass-panel, .capability-row, .project-row').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // --- MOBILE MENU FUNCTIONS ---
+        function toggleMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        }
+
+        // --- SPA NAVIGATION LOGIC ---
+        function openDetail(viewId) {
+            document.getElementById('main-scroll-site').style.display = 'none';
+            document.querySelectorAll('.detail-view').forEach(view => view.style.display = 'none');
+            document.getElementById(viewId).style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+        function closeDetail() {
+            document.querySelectorAll('.detail-view').forEach(view => view.style.display = 'none');
+            document.getElementById('main-scroll-site').style.display = 'block';
+            document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+        }
+        function showMain() {
+            closeMobileMenu();
+            if (document.getElementById('main-scroll-site').style.display === 'none') { closeDetail(); }
+        }
+
+        // --- OPTIMIZED PARTICLE SYSTEM ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Setup sizing
+        function setCanvasSize() {
+            canvas.width = window.innerWidth; 
+            canvas.height = window.innerHeight;
+        }
+        setCanvasSize();
+
+        let particlesArray = [];
+        
+        // Mouse/Touch Interaction Object
+        let interaction = { 
+            x: null, 
+            y: null, 
+            radius: Math.min(150, (canvas.height/10) * (canvas.width/10)) // Responsive radius
+        };
+
+        // Event Listeners for Interaction
+        window.addEventListener('mousemove', (e) => { 
+            interaction.x = e.x; 
+            interaction.y = e.y; 
+        });
+        
+        // Touch support for mobile devices
+        window.addEventListener('touchmove', (e) => {
+            interaction.x = e.touches[0].clientX;
+            interaction.y = e.touches[0].clientY;
+        });
+        window.addEventListener('touchend', () => {
+            interaction.x = null;
+            interaction.y = null;
+        });
+        window.addEventListener('mouseout', () => {
+            interaction.x = null;
+            interaction.y = null;
+        });
+
+        // Handle browser resize properly
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            interaction.radius = Math.min(150, (canvas.height/10) * (canvas.width/10));
+            init(); // Reinitialize particles to fit new screen layout
+        });
+
+        const particleColors = ['#F5D5E0', '#6667AB', '#7B337E'];
+
+        class Particle {
+            constructor(x, y, dx, dy, size, color) { 
+                this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size; this.color = color; 
+            }
+            draw() { 
+                ctx.beginPath(); 
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); 
+                ctx.fillStyle = this.color; 
+                // Removed shadowBlur to significantly improve framerates
+                ctx.fill(); 
+            }
+            update() {
+                // Screen collision
+                if (this.x > canvas.width || this.x < 0) this.dx = -this.dx; 
+                if (this.y > canvas.height || this.y < 0) this.dy = -this.dy;
+                
+                // Mouse/Touch interaction
+                let dx = interaction.x - this.x; 
+                let dy = interaction.y - this.y; 
+                let dist = Math.sqrt(dx*dx + dy*dy);
+                
+                if (interaction.x !== null && dist < interaction.radius) { 
+                    // Smooth repulsion effect
+                    this.x -= (dx/dist) * 2; 
+                    this.y -= (dy/dist) * 2; 
+                } else { 
+                    this.x += this.dx; 
+                    this.y += this.dy; 
+                }
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = []; 
+            // Cap the max number of particles so mobile/large screens don't lag
+            let num = Math.min(Math.floor((canvas.height * canvas.width) / 10000), 120);
+            
+            for (let i = 0; i < num; i++) {
+                let size = Math.random() * 2 + 1; 
+                let x = Math.random() * canvas.width; 
+                let y = Math.random() * canvas.height;
+                let dx = (Math.random() - 0.5) * 1.5; 
+                let dy = (Math.random() - 0.5) * 1.5;
+                let col = particleColors[Math.floor(Math.random() * particleColors.length)];
+                particlesArray.push(new Particle(x, y, dx, dy, size, col));
+            }
+        }
+
+        function connect() {
+            // Optimized connection looping
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a + 1; b < particlesArray.length; b++) {
+                    let dx = particlesArray[a].x - particlesArray[b].x;
+                    let dy = particlesArray[a].y - particlesArray[b].y;
+                    let d = dx * dx + dy * dy;
+                    
+                    if (d < 12000) {
+                        let op = 1 - (d/12000); 
+                        ctx.strokeStyle = `rgba(245, 213, 224, ${op * 0.25})`;
+                        ctx.lineWidth = 1; 
+                        ctx.beginPath(); 
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y); 
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() { 
+            requestAnimationFrame(animate); 
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            particlesArray.forEach(p => p.update()); 
+            connect(); 
+        }
+
+        init(); 
+        animate();
+    </script>
+</body>
+</html>

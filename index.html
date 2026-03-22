@@ -343,6 +343,11 @@
 
         /* --- MOBILE LAYOUTS (max-width: 768px) --- */
         @media (max-width: 768px) {
+
+            .glass {
+            backdrop-filter: none; /* Turn off blur for mobile */
+            background: rgba(33, 6, 53, 0.95); /* Using a more solid color instead */
+            }
             /* Hide desktop navigation and contact button */
             nav { display: none; }
             .contact-btn { display: none; }

@@ -11,45 +11,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --moon-light: #F5D5E0;   
-            --moon-blue: #6667AB;    
-            --moon-purple: #7B337E;  
-            --moon-plum: #420D4B;    
-            --moon-dark: #210635;    
+            /* Warm Earthy Neutral Palette */
+            --text-main: #f2e9e4;   /* Warm Cream */
+            --accent-primary: #c9ada7;    /* Muted Terracotta / Clay */
+            --accent-secondary: #9a8c98;  /* Soft Sage Green */
+            --bg-panel: #4a4e69;    /* Warm Charcoal */
+            --bg-dark: #22223b;    /* Deep Espresso / Off-Black */
             
-            --glass-bg: rgba(33, 6, 53, 0.35); 
-            --glass-border: rgba(245, 213, 224, 0.2);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(245, 213, 224, 0.05);
+            --glass-bg: rgba(38, 43, 51, 0.65); 
+            --glass-border: rgba(253, 246, 239, 0.12);
+            --glass-shadow: 0 8px 32px 0 rgba(10, 12, 15, 0.6), inset 0 0 15px rgba(253, 246, 239, 0.03);
         }
 
         body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Outfit', sans-serif;            color: var(--moon-light);
-            background: linear-gradient(-45deg, #dcd3c2, #9f677b, #1f2955, #dad297);
+            font-family: 'Outfit', sans-serif;            
+            color: var(--text-main);
+            /* Soft, earthy dark gradient */
+            background: linear-gradient(-45deg, var(--accent-secondary), var(--accent-primary), #22223b, var(--accent-secondary));
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-
-
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
-        }
-
-        /* --- INTERACTIVE CANVAS LAYER --- */
-        #particle-canvas {
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100vw; 
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none; 
         }
 
         .site-logo {
@@ -71,28 +61,28 @@
         .site-logo img {
             height: 70px;
             width: auto;
-            filter: drop-shadow(0 0 15px rgba(245, 213, 224, 0.6)) drop-shadow(0 0 30px rgba(102, 103, 171, 0.4));
+            filter: drop-shadow(0 0 15px rgba(244, 241, 235, 0.2)) drop-shadow(0 0 30px rgba(212, 154, 137, 0.3));
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             image-rendering: crisp-edges;
         }
 
         .site-logo:hover img {
-            filter: drop-shadow(0 0 25px rgba(245, 213, 224, 0.8)) drop-shadow(0 0 40px rgba(102, 103, 171, 0.6)) brightness(1.15);
+            filter: drop-shadow(0 0 25px rgba(244, 241, 235, 0.4)) drop-shadow(0 0 40px rgba(212, 154, 137, 0.5)) brightness(1.15);
         }
 
         /* --- TYPOGRAPHY --- */
         h1, h2, h3 { 
             font-family: 'Montserrat', sans-serif; 
-            color: var(--moon-light); 
+            color: var(--text-main); 
             font-weight: 800; 
             letter-spacing: -0.5px; 
-            text-shadow: 0 0 10px rgba(245, 213, 224, 0.4); 
+            text-shadow: 0 0 10px rgba(244, 241, 235, 0.15); 
         }
         
         p { 
             line-height: 1.7; 
             font-size: 1.1rem; 
-            color: rgba(245, 213, 224, 0.9); 
+            color: rgba(244, 241, 235, 0.85); 
             font-weight: 300; 
             font-family: 'Outfit', sans-serif; 
         }
@@ -114,21 +104,21 @@
 
         .glass-panel { padding: 40px; margin-bottom: 40px; transition: all 0.4s ease; }
         .glass-panel:hover {
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6), 0 0 25px rgba(102, 103, 171, 0.3), inset 0 0 15px rgba(245, 213, 224, 0.15);
-            border: 1px solid rgba(245, 213, 224, 0.5); transform: translateY(-5px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6), 0 0 25px rgba(34, 34, 59, 1), inset 0 0 15px rgba(74, 78, 105, 1);
+            border: 1px solid rgba(244, 241, 235, 0.2); transform: translateY(-5px);
         }
 
         .glass-btn {
-            background: rgba(102, 103, 171, 0.15); backdrop-filter: blur(20px);
-            border: 1px solid var(--moon-blue); border-radius: 30px; color: var(--moon-light);
+            background: rgba(212, 154, 137, 0.15); backdrop-filter: blur(20px);
+            border: 1px solid var(--accent-primary); border-radius: 30px; color: var(--text-main);
             padding: 12px 28px; font-size: 1rem; font-weight: bold; cursor: pointer;
             transition: all 0.3s ease; text-decoration: none; display: inline-block;
-            text-shadow: 0 0 5px rgba(245, 213, 224, 0.5); z-index: 10; position: relative;
+            text-shadow: 0 0 5px rgba(244, 241, 235, 0.3); z-index: 10; position: relative;
         }
 
         .glass-btn:hover {
-            background: rgba(102, 103, 171, 0.6); color: #fff; transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 0 20px rgba(102, 103, 171, 0.8); border-color: var(--moon-light);
+            background: rgba(212, 154, 137, 0.6); color: #fff; transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 20px rgba(212, 154, 137, 0.5); border-color: var(--text-main);
         }
 
         /* --- LAYOUT & SECTIONS --- */
@@ -146,9 +136,9 @@
             gap: 35px;
             padding: 18px 50px;
             border-radius: 50px;
-            background: rgba(33, 6, 53, 0.75);
-            border: 1.5px solid rgba(102, 103, 171, 0.5);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(102, 103, 171, 0.15);
+            background: rgba(26, 24, 23, 0.75);
+            border: 1.5px solid rgba(140, 154, 142, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(140, 154, 142, 0.1);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             width: max-content;
@@ -159,13 +149,13 @@
         }
 
         nav:hover {
-            background: rgba(33, 6, 53, 0.85);
-            border-color: rgba(102, 103, 171, 0.7);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(102, 103, 171, 0.25);
+            background: rgba(26, 24, 23, 0.9);
+            border-color: rgba(140, 154, 142, 0.6);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(140, 154, 142, 0.2);
         }
 
         nav a {
-            color: var(--moon-light);
+            color: var(--text-main);
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
@@ -182,15 +172,15 @@
             position: absolute;
             inset: 0;
             border-radius: 25px;
-            background: rgba(102, 103, 171, 0.15);
+            background: rgba(212, 154, 137, 0.15);
             opacity: 0;
             transition: opacity 0.3s ease;
             z-index: -1;
         }
 
         nav a:hover {
-            color: var(--moon-light);
-            text-shadow: 0 0 12px rgba(102, 103, 171, 0.9);
+            color: var(--text-main);
+            text-shadow: 0 0 12px rgba(212, 154, 137, 0.8);
             transform: translateY(-3px);
         }
 
@@ -205,16 +195,16 @@
             right: 50px;
             z-index: 1001;
             padding: 25px 32px;
-            background: linear-gradient(135deg, rgba(102, 103, 171, 0.4), rgba(123, 51, 126, 0.3));
-            border: 1.5px solid var(--moon-light);
+            background: linear-gradient(135deg, rgba(212, 154, 137, 0.3), rgba(140, 154, 142, 0.3));
+            border: 1.5px solid var(--text-main);
             border-radius: 40px;
-            color: var(--moon-light);
+            color: var(--text-main);
             font-weight: 600;
             font-size: 0.95rem;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 4px 20px rgba(102, 103, 171, 0.2), inset 0 0 15px rgba(245, 213, 224, 0.05);
+            box-shadow: 0 4px 20px rgba(212, 154, 137, 0.15), inset 0 0 15px rgba(244, 241, 235, 0.05);
             letter-spacing: 0.5px;
             display: flex;
             align-items: center;
@@ -223,11 +213,11 @@
         }
 
         .contact-btn:hover {
-            background: linear-gradient(135deg, rgba(102, 103, 171, 0.6), rgba(123, 51, 126, 0.5));
-            border-color: var(--moon-light);
-            box-shadow: 0 8px 35px rgba(102, 103, 171, 0.4), inset 0 0 20px rgba(245, 213, 224, 0.15);
+            background: linear-gradient(135deg, rgba(212, 154, 137, 0.6), rgba(140, 154, 142, 0.6));
+            border-color: var(--text-main);
+            box-shadow: 0 8px 35px rgba(212, 154, 137, 0.3), inset 0 0 20px rgba(244, 241, 235, 0.1);
             transform: translateY(-4px) scale(1.05);
-            text-shadow: 0 0 10px rgba(245, 213, 224, 0.8);
+            text-shadow: 0 0 10px rgba(244, 241, 235, 0.6);
         }
 
         /* --- HAMBURGER MENU (Mobile) --- */
@@ -250,7 +240,7 @@
         .hamburger-btn span {
             width: 100%;
             height: 3px;
-            background: var(--moon-light);
+            background: var(--text-main);
             border-radius: 2px;
             transition: all 0.3s ease;
             display: block;
@@ -265,7 +255,7 @@
         }
 
         .hamburger-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
+            transform: rotate(-45deg) translate(10px, -10px);
         }
 
         /* Mobile Menu */
@@ -275,7 +265,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(33, 6, 53, 0.95);
+            background: rgba(26, 24, 23, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             display: none;
@@ -291,7 +281,7 @@
         }
 
         .mobile-menu a {
-            color: var(--moon-light);
+            color: var(--text-main);
             text-decoration: none;
             font-size: 1.5rem;
             font-weight: 600;
@@ -302,13 +292,13 @@
         }
 
         .mobile-menu a:hover {
-            text-shadow: 0 0 20px rgba(102, 103, 171, 0.8);
+            text-shadow: 0 0 20px rgba(212, 154, 137, 0.8);
             transform: scale(1.1);
         }
 
         .mobile-menu .contact-link {
-            background: linear-gradient(135deg, rgba(102, 103, 171, 0.5), rgba(123, 51, 126, 0.4));
-            border: 1.5px solid var(--moon-light);
+            background: linear-gradient(135deg, rgba(212, 154, 137, 0.4), rgba(140, 154, 142, 0.4));
+            border: 1.5px solid var(--text-main);
             border-radius: 30px;
             padding: 15px 40px;
             font-size: 1.2rem;
@@ -316,8 +306,8 @@
         }
 
         .mobile-menu .contact-link:hover {
-            background: linear-gradient(135deg, rgba(102, 103, 171, 0.7), rgba(123, 51, 126, 0.6));
-            box-shadow: 0 0 30px rgba(102, 103, 171, 0.5);
+            background: linear-gradient(135deg, rgba(212, 154, 137, 0.6), rgba(140, 154, 142, 0.6));
+            box-shadow: 0 0 30px rgba(212, 154, 137, 0.4);
         }
 
         /* --- TABLET LAYOUTS (768px - 1024px) --- */
@@ -343,23 +333,16 @@
 
         /* --- MOBILE LAYOUTS (max-width: 768px) --- */
         @media (max-width: 768px) {
-
             .glass {
-            backdrop-filter: none; /* Turn off blur for mobile */
-            background: rgba(33, 6, 53, 0.95); /* Using a more solid color instead */
+            backdrop-filter: none; 
+            background: var(--glass-bg); 
             }
-            /* Hide desktop navigation and contact button */
             nav { display: none; }
             .contact-btn { display: none; }
-
-            /* Show hamburger menu */
             .hamburger-btn { display: flex; }
-
-            /* Logo sizing */
             .site-logo { left: 15px; top: 15px; }
             .site-logo img { height: 45px; }
 
-            /* Hero section */
             #hero { min-height: 85vh; padding-top: 80px; }
             .hero-content { 
                 padding: 0 20px !important; 
@@ -374,13 +357,9 @@
                 margin-bottom: 15px;
             }
             .hero-content p { font-size: 0.9rem; }
-            
-            /* Section adjustments */
             section { padding: 50px 0; }
             .container { padding: 0 15px; }
         }
-
-        
 
         /* --- HERO BANNER --- */
         #hero {
@@ -445,9 +424,9 @@
         .capability-row.reverse { flex-direction: row-reverse; }
         .capability-content { flex: 1; min-width: 300px; }
         .capability-visual {
-            flex: 1; min-width: 300px; height: 300px; background: rgba(0, 0, 0, 0.3); border-radius: 10px;
-            border: 1px solid rgba(102, 103, 171, 0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
-            display: flex; align-items: center; justify-content: center; color: var(--moon-blue); font-weight: bold; overflow: hidden; position: relative;
+            flex: 1; min-width: 300px; height: 300px; background: rgba(0, 0, 0, 0.4); border-radius: 10px;
+            border: 1px solid rgba(140, 154, 142, 0.3); box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
+            display: flex; align-items: center; justify-content: center; color: var(--accent-primary); font-weight: bold; overflow: hidden; position: relative;
         }
         .capability-visual img {
             width: 100%;
@@ -458,8 +437,7 @@
         }
         .capability-visual::after {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
-            background: rgba(245, 213, 224, 0.3); box-shadow: 0 0 15px rgba(245, 213, 224, 0.6);
-            animation: scanline 3s linear infinite;
+            background: rgba(140, 154, 142, 0.4); box-shadow: 0 0 15px rgba(140, 154, 142, 0.6);
         }
         @keyframes scanline { 0% { top: -10%; } 100% { top: 110%; } }
 
@@ -472,17 +450,17 @@
         .project-row { display: flex; flex-wrap: wrap; gap: 40px; margin-bottom: 60px; align-items: stretch; }
         .project-info { flex: 1; min-width: 300px; }
         .project-media {
-            flex: 1.5; min-width: 300px; background: rgba(0,0,0,0.4); border-radius: 16px;
+            flex: 1.5; min-width: 300px; background: rgba(0,0,0,0.5); border-radius: 16px;
             display: flex; align-items: center; justify-content: center; overflow: hidden;
-            border: 1px solid var(--moon-purple); box-shadow: 0 0 15px rgba(123, 51, 126, 0.2);
+            border: 1px solid var(--accent-secondary); box-shadow: 0 0 15px rgba(140, 154, 142, 0.2);
             aspect-ratio: 16/9; position: relative;
         }
-        .project-media span { position: absolute; z-index: 1; font-weight: bold; color: rgba(245, 213, 224, 0.5); }
+        .project-media span { position: absolute; z-index: 1; font-weight: bold; color: rgba(244, 241, 235, 0.5); }
         
         .tag { 
-            background: rgba(102, 103, 171, 0.2); border: 1px solid var(--moon-blue);
-            color: var(--moon-light); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; 
-            display: inline-block; margin: 0 5px 5px 0; text-shadow: 0 0 5px rgba(245, 213, 224, 0.3);
+            background: rgba(140, 154, 142, 0.15); border: 1px solid var(--accent-secondary);
+            color: var(--text-main); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; 
+            display: inline-block; margin: 0 5px 5px 0; text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         }
 
         .button-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
@@ -506,7 +484,6 @@
     <a href="#hero" class="site-logo" onclick="showMain()">
         <img src="assets/portfoliologo.png" alt="Creative Technologist Logo">
     </a>
-    <canvas id="particle-canvas"></canvas>
 
     <nav class="glass">
         <a href="#hero" onclick="showMain()">Home</a>
@@ -536,11 +513,11 @@
             <div class="container" style="width: 100%;">
                 <div class="hero-content">
                     <h1>EZEKIEL<br>BRIOSO</h1>
-                    <p style="color: var(--moon-blue); font-weight: bold; letter-spacing: 2px; text-transform: uppercase;">Creative Technologist • Full-Stack Developer • Experience Designer</p>
+                    <p style="color: var(--accent-primary); font-weight: bold; letter-spacing: 2px; text-transform: uppercase;">Creative Technologist • Full-Stack Developer • Experience Designer</p>
                     <p style="margin: 20px 0 40px 0;">A Senior Creative Computing Student, bridging the gap between logic and imagination to develop novel results. Your aspirations at the heart of every design.</p>
                     
                     <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                        <a href="#portfolio" class="glass-btn" style="padding: 15px 35px; background: var(--moon-light); color: var(--moon-dark);">Explore My Portfolio &rarr;</a>
+                        <a href="#portfolio" class="glass-btn" style="padding: 15px 35px; background: var(--text-main); color: var(--bg-dark);">Explore My Portfolio &rarr;</a>
                         <a href="#contact" class="glass-btn" style="padding: 15px 35px;">Hire Me &rarr;</a>
                     </div>
                 </div>
@@ -683,31 +660,6 @@
         <div class="glass glass-panel"><h1 style="margin:0;">Experience Design</h1></div>
         
         <div class="project-row glass glass-panel"><div class="project-info">
-            <h2>PlatePal App</h2>
-            <p>Application Experience Prototype</p>
-            <p><strong>PlatePal App</strong> is a mobile application prototype designed to provide a seamless and engaging user experience for meal tracking and supporting nearby farmers or small businesses.</p>
-            <a href="https://www.figma.com/design/uwFTP7oVk7K3t4ZN452ou6/PlatePal-App?node-id=9-6&m=dev&t=86gcgAnWMP1uLiIV-1" target="_blank" class="glass-btn" style="margin-top: 15px;">
-                View Project &rarr;</a>
-            </div>
-            <div class="project-media">
-                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/proto/uwFTP7oVk7K3t4ZN452ou6/PlatePal-App?node-id=250-462&p=f&scaling=scale-down&content-scaling=fixed&page-id=9%3A6&starting-point-node-id=60%3A42&embed-host=share" allowfullscreen></iframe>
-            </div>
-        </div>
-        
-        
-        <div class="project-row glass glass-panel"><div class="project-info">
-            <h2>Chocolate Box Website</h2>
-            <p>Web Experience Prototype</p><p><strong>Chocolate Box Website</strong> is a web experience prototype designed to showcase the products and services of a chocolate shop. The website features a modern, responsive design with an intuitive user interface that allows customers to browse the menu, view store locations, and place orders online.</p>
-            <a href="https://www.figma.com/design/eTdNmSITy5QSp9sCvFB4Lc/Gerard-s-Chocolate-Box-Website-for-Desktop---Mobile?node-id=0-1&m=dev&t=Dj8CXisWU3WXzmbP-1"  target="_blank" class="glass-btn" style="margin-top: 15px;">
-                View Project &rarr;</a>
-            </div>
-            <div class="project-media">
-                    <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/proto/eTdNmSITy5QSp9sCvFB4Lc/Gerard-s-Chocolate-Box-Website-for-Desktop---Mobile?node-id=236-234&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=236%3A234&embed-host=share" allowfullscreen></iframe>
-            </div>
-        </div>
-        
-        
-        <div class="project-row glass glass-panel"><div class="project-info">
             <h2>Quadro Coffee Website</h2>
             <p>Web Experience Prototype</p>
             <p><strong>Quadro Coffee Website</strong> is a web experience prototype designed to showcase the products and services of a local coffee shop. The website features a modern, responsive design with an intuitive user interface that allows customers to browse the menu, view store locations, and place orders online.</p>
@@ -718,7 +670,32 @@
                 <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/proto/9NNmeu5T6o0wGsisaac4Wb/Quadro-Coffee?node-id=32-4&scaling=scale-down&content-scaling=fixed&page-id=19%3A2&starting-point-node-id=32%3A4&embed-host=share" allowfullscreen></iframe>
             </div>
         </div>
+
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>Chocolate Box Website</h2>
+            <p>Web Experience Prototype</p><p><strong>Chocolate Box Website</strong> is a web experience prototype designed to showcase the products and services of a chocolate shop. The website features a modern, responsive design with an intuitive user interface that allows customers to browse the menu, view store locations, and place orders online.</p>
+            <a href="https://www.figma.com/design/eTdNmSITy5QSp9sCvFB4Lc/Gerard-s-Chocolate-Box-Website-for-Desktop---Mobile?node-id=0-1&m=dev&t=Dj8CXisWU3WXzmbP-1"  target="_blank" class="glass-btn" style="margin-top: 15px;">
+                View Project &rarr;</a>
+            </div>
+            <div class="project-media">
+                    <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/proto/eTdNmSITy5QSp9sCvFB4Lc/Gerard-s-Chocolate-Box-Website-for-Desktop---Mobile?node-id=236-234&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=236%3A234&embed-host=share" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="project-row glass glass-panel"><div class="project-info">
+            <h2>PlatePal App</h2>
+            <p>Application Experience Prototype</p>
+            <p><strong>PlatePal App</strong> is a mobile application prototype designed to provide a seamless and engaging user experience for meal tracking and supporting nearby farmers or small businesses.</p>
+            <a href="https://www.figma.com/design/uwFTP7oVk7K3t4ZN452ou6/PlatePal-App?node-id=9-6&m=dev&t=86gcgAnWMP1uLiIV-1" target="_blank" class="glass-btn" style="margin-top: 15px;">
+                View Project &rarr;</a>
+            </div>
+            <div class="project-media">
+                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/proto/uwFTP7oVk7K3t4ZN452ou6/PlatePal-App?node-id=250-462&p=f&scaling=scale-down&content-scaling=fixed&page-id=9%3A6&starting-point-node-id=60%3A42&embed-host=share" allowfullscreen></iframe>
+            </div>
+        </div>
     </div>
+
+    
 
 
     <div id="narratives-detail" class="detail-view container">
@@ -818,135 +795,6 @@
             closeMobileMenu();
             if (document.getElementById('main-scroll-site').style.display === 'none') { closeDetail(); }
         }
-
-        // --- OPTIMIZED PARTICLE SYSTEM ---
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        
-        // Setup sizing
-        function setCanvasSize() {
-            canvas.width = window.innerWidth; 
-            canvas.height = window.innerHeight;
-        }
-        setCanvasSize();
-
-        let particlesArray = [];
-        
-        // Mouse/Touch Interaction Object
-        let interaction = { 
-            x: null, 
-            y: null, 
-            radius: Math.min(150, (canvas.height/10) * (canvas.width/10)) // Responsive radius
-        };
-
-        // Event Listeners for Interaction
-        window.addEventListener('mousemove', (e) => { 
-            interaction.x = e.x; 
-            interaction.y = e.y; 
-        });
-        
-        // Touch support for mobile devices
-        window.addEventListener('touchmove', (e) => {
-            interaction.x = e.touches[0].clientX;
-            interaction.y = e.touches[0].clientY;
-        });
-        window.addEventListener('touchend', () => {
-            interaction.x = null;
-            interaction.y = null;
-        });
-        window.addEventListener('mouseout', () => {
-            interaction.x = null;
-            interaction.y = null;
-        });
-
-        // Handle browser resize properly
-        window.addEventListener('resize', () => {
-            setCanvasSize();
-            interaction.radius = Math.min(150, (canvas.height/10) * (canvas.width/10));
-            init(); // Reinitialize particles to fit new screen layout
-        });
-
-        const particleColors = ['#F5D5E0', '#6667AB', '#7B337E'];
-
-        class Particle {
-            constructor(x, y, dx, dy, size, color) { 
-                this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size; this.color = color; 
-            }
-            draw() { 
-                ctx.beginPath(); 
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); 
-                ctx.fillStyle = this.color; 
-                // Removed shadowBlur to significantly improve framerates
-                ctx.fill(); 
-            }
-            update() {
-                // Screen collision
-                if (this.x > canvas.width || this.x < 0) this.dx = -this.dx; 
-                if (this.y > canvas.height || this.y < 0) this.dy = -this.dy;
-                
-                // Mouse/Touch interaction
-                let dx = interaction.x - this.x; 
-                let dy = interaction.y - this.y; 
-                let dist = Math.sqrt(dx*dx + dy*dy);
-                
-                if (interaction.x !== null && dist < interaction.radius) { 
-                    // Smooth repulsion effect
-                    this.x -= (dx/dist) * 2; 
-                    this.y -= (dy/dist) * 2; 
-                } else { 
-                    this.x += this.dx; 
-                    this.y += this.dy; 
-                }
-                this.draw();
-            }
-        }
-
-        function init() {
-            particlesArray = []; 
-            // Cap the max number of particles so mobile/large screens don't lag
-            let num = Math.min(Math.floor((canvas.height * canvas.width) / 10000), 120);
-            
-            for (let i = 0; i < num; i++) {
-                let size = Math.random() * 2 + 1; 
-                let x = Math.random() * canvas.width; 
-                let y = Math.random() * canvas.height;
-                let dx = (Math.random() - 0.5) * 1.5; 
-                let dy = (Math.random() - 0.5) * 1.5;
-                let col = particleColors[Math.floor(Math.random() * particleColors.length)];
-                particlesArray.push(new Particle(x, y, dx, dy, size, col));
-            }
-        }
-
-        function connect() {
-            // Optimized connection looping
-            for (let a = 0; a < particlesArray.length; a++) {
-                for (let b = a + 1; b < particlesArray.length; b++) {
-                    let dx = particlesArray[a].x - particlesArray[b].x;
-                    let dy = particlesArray[a].y - particlesArray[b].y;
-                    let d = dx * dx + dy * dy;
-                    
-                    if (d < 12000) {
-                        let op = 1 - (d/12000); 
-                        ctx.strokeStyle = `rgba(245, 213, 224, ${op * 0.25})`;
-                        ctx.lineWidth = 1; 
-                        ctx.beginPath(); 
-                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y); 
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() { 
-            requestAnimationFrame(animate); 
-            ctx.clearRect(0, 0, canvas.width, canvas.height); 
-            particlesArray.forEach(p => p.update()); 
-            connect(); 
-        }
-
-        init(); 
-        animate();
     </script>
 </body>
 </html>
